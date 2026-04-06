@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import "./App.css";
 import TodoItem from "./components/TodoItem";
 
@@ -12,8 +12,15 @@ type FilterType = "All" | "Active" | "Completed";
 
 function App() {
   const [todo, setTodo] = useState<string>("");
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const stored = localStorage.getItem("todos");
+    return stored ? JSON.parse(stored) : [];
+  });
   const [filter, setFilter] = useState<FilterType>("All");
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,6 +50,15 @@ function App() {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };
+
+  const editTodo = (id: number, data: string) => {
+    console.log(todos);
+    const updatedTodos = [...todos];
+    const ind = updatedTodos.findIndex((todo) => todo.id === id);
+    updatedTodos[ind].text = data;
+
+    setTodos(updatedTodos);
+  }
 
   const filteredTodos: Todo[] = todos.filter((todo) => {
     if (filter === "Active") return !todo.completed;
@@ -108,6 +124,7 @@ function App() {
                   status={todo.completed}
                   handleTodoStatus={handleTodoStatus}
                   deleteTodo={deleteTodo}
+                  editTodo={editTodo}
                 />
               </div>
             );

@@ -6,6 +6,7 @@ type TodoItemProps = {
   status: boolean;
   handleTodoStatus: (id: number) => void;
   deleteTodo: (id: number) => void;
+  editTodo: (id: number, text: string) => void;
 };
 
 function TodoItem({
@@ -14,8 +15,11 @@ function TodoItem({
   status,
   handleTodoStatus,
   deleteTodo,
+  editTodo
 }: TodoItemProps) {
   const [completed, setCompleted] = useState<boolean>(status);
+  const [editText, setEditText] = useState<string>(text);
+  const [edit, setEdit] = useState<boolean>(false);
 
   const statusHandler = () => {
     setCompleted(!completed);
@@ -25,6 +29,15 @@ function TodoItem({
   const deleteTodoHandler = () => {
     deleteTodo(id);
   };
+
+  const editTodoHandler = () => {
+    setEdit(true);
+  }
+
+  const handleEdit = () => {
+    setEdit(false);
+    editTodo(id, editText);
+  }
 
   return (
     <div
@@ -43,11 +56,14 @@ function TodoItem({
         onChange={statusHandler}
         style={{ margin: 0 }}
       />
-      <h4
+      {!edit ? (<h4
         style={{ textDecoration: status ? "line-through" : "none", margin: 0 }}
+        onDoubleClick={editTodoHandler}
       >
         {text}
-      </h4>
+      </h4>) : (
+        <input type="text" value={editText} onBlur={handleEdit} onChange={(e) => setEditText(e.target.value)}/>
+      )}
       <button onClick={deleteTodoHandler}>❌</button>
     </div>
   );
