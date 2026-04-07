@@ -38,13 +38,13 @@ export default function App() {
 
     if(observer.current) observer.current.disconnect(); // cleans previous observer.
 
-    observer.current = new IntersectionObserver((entries) => { // create new observer.
-      if(entries[0].isIntersecting && hasMore) {
+    observer.current = new IntersectionObserver((entries) => { // create new observer(This watches when element enters viewport).
+      if(entries[0].isIntersecting && hasMore) { // checks if last element is visible on screen(User has reached last data, time to load more elements).
         setPage(prev => prev + 1)
       }
-    }, { threshold: 1});
+    }, { threshold: 0}); // threshold: controls when API call has to be made, 1 -> after 100% data loads, 0.5 -> after 50% data loads.
 
-    if(node) observer.current.observe(node);
+    if(node) observer.current.observe(node); // Attach observer to current last element in list.
 
   }, [loading, hasMore])
 
