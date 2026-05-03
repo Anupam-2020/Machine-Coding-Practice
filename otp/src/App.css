@@ -1,0 +1,67 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f8;
+  font-family: Arial, sans-serif;
+}
+
+.otp-card {
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  width: 360px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.otp-card h2 {
+  margin-bottom: 8px;
+}
+
+.otp-card p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.otp-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.otp-input {
+  width: 42px;
+  height: 48px;
+  font-size: 22px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+.otp-input:focus {
+  border-color: #007bff;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.clear-btn {
+  background: #6c757d;
+}
